@@ -1,4 +1,6 @@
 import config
+from pipeline_urls import PutTodB
+from connection import db
 class Crawler():
     def __init__(self):
         pass
@@ -28,6 +30,15 @@ class Crawler():
                     for li in tmp1:
                         u = li.find('a')['href']
                         all_urls.append(u)
+                review_str = " ".join([x.encode('UTF8') for x in all_urls])
+                print(review_str,'\n\n')
+                record = PutTodB(urls=review_str)
+                print("record")
+                db.add(record)
+                db.commit()
+            # yield item
+
+
             except Exception as e:
                 print(e)
             finally:
